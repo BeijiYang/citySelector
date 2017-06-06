@@ -1,0 +1,66 @@
+<view class="container">
+<view class="searchLetter touchClass">
+  <view class="thishotText" bindtap="hotCity">
+    <view style="margin-top:0;">当前</view>
+    <view style="margin-top:0;">热门</view>
+  </view>
+  <view wx:for="{{searchLetter}}" style="color:#2ab4ff;font-size:20rpx;" wx:key="index" data-letter="{{item.name}}" catchtouchend="clickLetter" >{{item.name}}</view>
+</view>
+
+<block wx:if="{{isShowLetter}}">
+  <view class="showSlectedLetter">
+    {{toastShowLetter}}
+  </view>
+</block>
+
+
+
+<scroll-view scroll-y="true" style="height:{{winHeight}}px" bindscroll="bindScroll"
+ scroll-into-view="{{scrollTopId}}" scroll-top="{{scrollTop}}">
+
+ <view class="hotcity-common">当前位于：{{county}}</view>
+ <view class="weui-grids">
+   <block class="hotCity" wx:for-items="{{countyList}}" wx:key="{{index}}">
+     <view class="weui-grid" data-cityCode="{{item.id}}" data-city="{{item.fullname}}" bindtap="bindCounty" >
+       <view class="weui-grid__label">{{item.fullname}}</view>
+     </view>
+   </block>
+ </view>
+
+<view class="selectCity">
+  <view class="hotcity-common">定位城市</view>
+  <view class="thisCityName">{{city}}</view>
+
+
+  <view class="hotcity-common">最常访问</view>
+  <view class="weui-grids">
+    <block class="hotCity" wx:for-items="{{commonCityList}}" wx:key="{{index}}">
+      <view class="weui-grid" data-cityCode="{{item.cityCode}}" data-city="{{item.city}}" bindtap="bindCity" >
+        <view class="weui-grid__label">{{item.city}}</view>
+      </view>
+    </block>
+  </view>
+
+    <view class="hotcity-common">热门城市</view>
+    <view class="weui-grids">
+      <block class="hotCity" wx:for-items="{{hotcityList}}" wx:key="{{index}}">
+        <view class="weui-grid" data-cityCode="{{item.cityCode}}" data-city="{{item.city}}" bindtap="bindCity" >
+          <view class="weui-grid__label">{{item.city}}</view>
+        </view>
+      </block>
+    </view>
+</view>
+
+
+  <view class="selection" wx:for="{{cityList}}" wx:key="{{item.initial}}">
+    <view class="item_letter"  id="{{item.initial}}">{{item.initial}}</view>
+    <view class="item_city"  wx:for="{{item.cityInfo}}" wx:for-item="ct" wx:key="{{ct.id}}" data-cityCode="{{ct.code}}" data-city="{{ct.city}}" bindtap="bindCity">
+      {{ct.city}}
+    </view>
+  </view>
+
+
+
+</scroll-view>
+
+</view>
