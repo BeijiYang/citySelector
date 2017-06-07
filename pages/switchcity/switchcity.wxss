@@ -4,6 +4,14 @@
   padding: 10rpx;
   margin-right: 50rpx;
 }
+
+input{
+  margin: 6rpx 20rpx;
+  text-align: center;
+  border: 2rpx solid lightgray;
+  border-radius: 20rpx;
+}
+
 .searchLetter {
   position: fixed;
   right: 0;

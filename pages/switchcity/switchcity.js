@@ -51,26 +51,27 @@ Page({
       cityList: cityList
     });
 
-    const that = this;
-    wx.getLocation({
-      type: 'wgs84',
-      success: function(res) {
-        let latitude = res.latitude
-        let longitude = res.longitude
-        wx.request({
-            url: `http://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${config.key}`,
-            success: res => {
-              console.log(res)
-              console.log(res.data.result.ad_info.city+res.data.result.ad_info.adcode);
-              that.setData({
-                city: res.data.result.ad_info.city,
-                currentCityCode: res.data.result.ad_info.adcode,
-              })
-              that.selectCounty();
-            }
-        })
-      }
-    })
+    this.getLocation();
+    // const that = this;
+    // wx.getLocation({
+    //   type: 'wgs84',
+    //   success: function(res) {
+    //     let latitude = res.latitude
+    //     let longitude = res.longitude
+    //     wx.request({
+    //         url: `http://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${config.key}`,
+    //         success: res => {
+    //           console.log(res)
+    //           console.log(res.data.result.ad_info.city+res.data.result.ad_info.adcode);
+    //           that.setData({
+    //             city: res.data.result.ad_info.city,
+    //             currentCityCode: res.data.result.ad_info.adcode,
+    //           })
+    //           that.selectCounty();
+    //         }
+    //     })
+    //   }
+    // })
   },
   onReady: function () {
     // 生命周期函数--监听页面初次渲染完成
@@ -171,5 +172,31 @@ Page({
         console.log(that.data.countyList);
       }
     })
-  }
+  },
+  getLocation: function() {
+    const that = this;
+    wx.getLocation({
+      type: 'wgs84',
+      success: function(res) {
+        let latitude = res.latitude
+        let longitude = res.longitude
+        wx.request({
+            url: `http://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${config.key}`,
+            success: res => {
+              console.log(res)
+              console.log(res.data.result.ad_info.city+res.data.result.ad_info.adcode);
+              that.setData({
+                city: res.data.result.ad_info.city,
+                currentCityCode: res.data.result.ad_info.adcode,
+              })
+              that.selectCounty();
+            }
+        })
+      }
+    })
+  },
+  bindKeyInput: function(e) {
+    console.log(e.detail.value); 
+
+  },
 })

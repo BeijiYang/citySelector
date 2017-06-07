@@ -18,6 +18,8 @@
 <scroll-view scroll-y="true" style="height:{{winHeight}}px" bindscroll="bindScroll"
  scroll-into-view="{{scrollTopId}}" scroll-top="{{scrollTop}}">
 
+<input bindinput="bindKeyInput" placeholder="输入城市名或拼音查询"></input>
+
  <view class="hotcity-common">当前位于：{{county}}</view>
  <view class="weui-grids">
    <block class="hotCity" wx:for-items="{{countyList}}" wx:key="{{index}}">
@@ -28,7 +30,7 @@
  </view>
 
 <view class="selectCity">
-  <view class="hotcity-common">定位城市</view>
+  <view class="hotcity-common" bindtap="getLocation">定位城市</view>
   <view class="thisCityName">{{city}}</view>
 
 
