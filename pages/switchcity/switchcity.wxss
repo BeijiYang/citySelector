@@ -31,7 +31,7 @@ input{
 .touchClass {
   background-color: #fff;
   color: #fff;
-  padding-top: 46rpx;
+  padding-top: 100rpx;
 }
 
 .showSlectedLetter {
@@ -151,6 +151,28 @@ input{
   overflow: hidden;
 }
 
+.ul {
+  display: block;
+  color: grey;
+  margin-left: 20rpx;
+}
+
+.li {
+  font-weight:100;
+  font-size: 30rpx;
+}
+
+input {
+
+  background-color: lightgrey;
+}
+.input {
+
+  padding: 16rpx 32rpx;
+  /*width: 100%;*/
+  margin: 0 10rpx;
+  border-bottom: 1rpx solid #F1F1F1;
+}
 /*.clearfix:before,
 .clearfix:after {
     content: " ";

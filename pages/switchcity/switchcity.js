@@ -1,4 +1,5 @@
 const city = require('../../utils/city.js');
+const cityObjs = require('../../test_city.js');
 const config = require('../../utils/config.js');
 const app = getApp();
 Page({
@@ -15,6 +16,8 @@ Page({
     hotcityList: [{ cityCode: 110000, city: '北京市' }, { cityCode: 310000, city: '上海市' }, { cityCode: 440100, city: '广州市' }, { cityCode: 440300, city: '深圳市' }, { cityCode: 330100, city: '杭州市' }, { cityCode: 320100, city: '南京市' }, { cityCode: 420100, city: '武汉市' },  { cityCode: 120000, city: '天津市' }, { cityCode: 610100, city: '西安市' }, ],
     commonCityList: [{ cityCode: 110000, city: '北京市' }, { cityCode: 310000, city: '上海市' }],
     countyList: [{ cityCode: 110000, county: 'A区' }, { cityCode: 310000, county: 'B区' }, { cityCode: 440100, county: 'C区' }, { cityCode: 440300, county: 'D区' }, { cityCode: 330100, county: 'E县' }, { cityCode: 320100, county: 'F县' }, { cityCode: 420100, county: 'G县' }],
+    inputName: '',
+    completeList: [],
   },
   onLoad: function () {
     // 生命周期函数--监听页面加载
@@ -128,12 +131,15 @@ Page({
 
   //选择城市
   bindCity: function (e) {
-    console.log("bindCity");
-    console.log(e);
+    // console.log("bindCity");
+    // console.log(e);
     this.setData({
       city: e.currentTarget.dataset.city,
+      currentCityCode: e.currentTarget.dataset.code,
       scrollTop: 0,
+      completeList: [],
     })
+    this.selectCounty()
   },
 
   bindCounty: function(e) {
@@ -159,6 +165,7 @@ Page({
   //  console.log(e.detail)
   },
   selectCounty: function() {
+    console.log("selectCounty");
     let code = this.data.currentCityCode
     console.log(code);
     const that = this;
@@ -196,7 +203,71 @@ Page({
     })
   },
   bindKeyInput: function(e) {
-    console.log(e.detail.value); 
-
+    console.log(e.detail.value);
+    this.setData({
+      inputName: e.detail.value
+    })
+    this.auto()
   },
+  auto: function() {
+    let inputSd = this.data.inputName
+    let sd = inputSd.toLowerCase();
+    let num = sd.length
+    const cityList = cityObjs.cityObjs;
+    let finalCityList = []
+
+    let temp = cityList.filter(
+                  item => {
+                    let text = item.short.slice(0,num)
+                    // if(text && text == sd){
+                    //   console.log(item);
+                    //   return item
+                    // }
+                    return (text && text == sd)
+                  }
+                );
+
+    let tempShorter = cityList.filter(
+                  itemShorter => {
+                    let textShorter = itemShorter.shorter.slice(0,num)
+                    // if(text && text == sd){
+                    //   console.log(item);
+                    //   return item
+                    // }
+                    return (textShorter && textShorter == sd)
+                  }
+                )
+
+   if(temp[0]) {
+     temp.map(
+       item => {
+         let testObj = {};
+         testObj.city = item.city
+         testObj.code = item.code
+         finalCityList.push(testObj)
+       }
+     )
+     this.setData({
+       completeList: finalCityList,
+     })
+     console.log(this.data.completeList);
+   }else if(tempShorter[0]) {
+     tempShorter.map(
+       item => {
+         let testObj = {};
+         testObj.city = item.city
+         testObj.code = item.code
+         finalCityList.push(testObj)
+       }
+     );
+     this.setData({
+       completeList: finalCityList,
+     })
+     console.log(this.data.completeList);
+   }else {
+     return
+   }
+
+ },
+
 })
