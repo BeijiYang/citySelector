@@ -177,6 +177,11 @@ Page({
           countyList: res.data.result[0],
         })
         console.log(that.data.countyList);
+        console.log("请求区县成功"+`http://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${config.key}`);
+        console.log(res)
+      },
+      fail: function() {
+        console.log("请求区县失败，请重试");
       }
     })
   },
