@@ -1,5 +1,5 @@
 const city = require('../../utils/city.js');
-const cityObjs = require('../../test_city.js');
+const cityObjs = require('../../utils/city.js');
 const config = require('../../utils/config.js');
 const app = getApp();
 Page({

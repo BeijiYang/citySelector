@@ -23,7 +23,7 @@
  scroll-into-view="{{scrollTopId}}" scroll-top="{{scrollTop}}">
 
 
-<ul wx:for="{{completeList}}" wx:key="*this" class="ul">
+<ul wx:for="{{completeList}}" wx:key="index" class="ul">
   <li bindtap="bindCity" data-city="{{item.city}}" data-code="{{item.code}}" class="li">{{item.city}}</li>
 </ul>
 
