@@ -1,5 +1,5 @@
 <view class="input">
-<input bindinput="bindKeyInput" placeholder="输入城市名或拼音查询" placeholder-style="font-size: 30rpx"></input>
+<input bindinput="bindKeyInput" bindblur="bindBlur" placeholder="输入城市名或拼音查询" placeholder-style="font-size: 30rpx"  value="{{inputName}}"></input>
 </view>
 
 

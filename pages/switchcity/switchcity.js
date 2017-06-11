@@ -183,6 +183,11 @@ Page({
       }
     })
   },
+  bindBlur: function(e) {
+    this.setData({
+      inputName: ''
+    })
+  },
   bindKeyInput: function(e) {
     console.log(e.detail.value);
     this.setData({
