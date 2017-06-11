@@ -42,14 +42,14 @@
   <view class="thisCityName">{{city}}</view>
 
 
-  <view class="hotcity-common">最常访问</view>
+  <!-- <view class="hotcity-common">最常访问</view>
   <view class="weui-grids">
     <block class="hotCity" wx:for-items="{{commonCityList}}" wx:key="{{index}}">
       <view class="weui-grid" data-code="{{item.cityCode}}" data-city="{{item.city}}" bindtap="bindCity" >
         <view class="weui-grid__label">{{item.city}}</view>
       </view>
     </block>
-  </view>
+  </view> -->
 
     <view class="hotcity-common">热门城市</view>
     <view class="weui-grids">

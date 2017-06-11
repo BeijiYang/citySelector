@@ -18,6 +18,7 @@ Page({
     countyList: [{ cityCode: 110000, county: 'A区' }, { cityCode: 310000, county: 'B区' }, { cityCode: 440100, county: 'C区' }, { cityCode: 440300, county: 'D区' }, { cityCode: 330100, county: 'E县' }, { cityCode: 320100, county: 'F县' }, { cityCode: 420100, county: 'G县' }],
     inputName: '',
     completeList: [],
+    county: '',
   },
   onLoad: function () {
     // 生命周期函数--监听页面加载
@@ -28,13 +29,7 @@ Page({
     const winHeight = sysInfo.windowHeight;
     const itemH = winHeight / searchLetter.length;
     let tempArr = [];
-    // for (var i = 0; i < searchLetter.length; i++) {
-    //   var temp = {};
-    //   temp.name = searchLetter[i];
-    //   temp.tHeight = i * itemH;
-    //   temp.bHeight = (i + 1) * itemH;
-    //   tempArr.push(temp)
-    // }
+
     searchLetter.map(
       (item,index) => {
         // console.log(item);
@@ -50,31 +45,12 @@ Page({
     this.setData({
       winHeight: winHeight,
       itemH: itemH,
-      searchLetter: tempArr, //带高度的ABC..
+      searchLetter: tempArr,
       cityList: cityList
     });
 
     this.getLocation();
-    // const that = this;
-    // wx.getLocation({
-    //   type: 'wgs84',
-    //   success: function(res) {
-    //     let latitude = res.latitude
-    //     let longitude = res.longitude
-    //     wx.request({
-    //         url: `http://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${config.key}`,
-    //         success: res => {
-    //           console.log(res)
-    //           console.log(res.data.result.ad_info.city+res.data.result.ad_info.adcode);
-    //           that.setData({
-    //             city: res.data.result.ad_info.city,
-    //             currentCityCode: res.data.result.ad_info.adcode,
-    //           })
-    //           that.selectCounty();
-    //         }
-    //     })
-    //   }
-    // })
+
   },
   onReady: function () {
     // 生命周期函数--监听页面初次渲染完成
@@ -134,6 +110,7 @@ Page({
     // console.log("bindCity");
     // console.log(e);
     this.setData({
+      county: '',
       city: e.currentTarget.dataset.city,
       currentCityCode: e.currentTarget.dataset.code,
       scrollTop: 0,
@@ -147,13 +124,7 @@ Page({
     console.log(e);
     this.setData({ county: e.currentTarget.dataset.city })
   },
-  //选择热门城市
-  // bindHotCity: function (e) {
-  //   console.log("bindHotCity")
-  //   this.setData({
-  //     city: e.currentTarget.dataset.city
-  //   })
-  // },
+
   //点击热门城市回到顶部
   hotCity: function () {
     console.log("hotCity");
@@ -165,7 +136,7 @@ Page({
   //  console.log(e.detail)
   },
   selectCounty: function() {
-    console.log("selectCounty");
+    console.log("正在定位区县");
     let code = this.data.currentCityCode
     console.log(code);
     const that = this;
@@ -186,6 +157,10 @@ Page({
     })
   },
   getLocation: function() {
+    console.log("正在定位城市");
+    this.setData({
+      county: ''
+    })
     const that = this;
     wx.getLocation({
       type: 'wgs84',
@@ -200,6 +175,7 @@ Page({
               that.setData({
                 city: res.data.result.ad_info.city,
                 currentCityCode: res.data.result.ad_info.adcode,
+                county: res.data.result.ad_info.district
               })
               that.selectCounty();
             }
@@ -224,10 +200,6 @@ Page({
     let temp = cityList.filter(
                   item => {
                     let text = item.short.slice(0,num)
-                    // if(text && text == sd){
-                    //   console.log(item);
-                    //   return item
-                    // }
                     return (text && text == sd)
                   }
                 );
@@ -235,10 +207,6 @@ Page({
     let tempShorter = cityList.filter(
                   itemShorter => {
                     let textShorter = itemShorter.shorter.slice(0,num)
-                    // if(text && text == sd){
-                    //   console.log(item);
-                    //   return item
-                    // }
                     return (textShorter && textShorter == sd)
                   }
                 )
