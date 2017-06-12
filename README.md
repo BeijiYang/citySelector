@@ -12,5 +12,6 @@
 * 并将其中的`key`改为自己的腾讯地图key（申请快速且免费）
 * ES6
 * 可 **直接作为模块使用**，如果对您有帮助，请star
+* 将模块集成到项目时，涉及到不同页面间数据通信的问题[参考博文](http://blog.csdn.net/beijiyang999/article/details/73109815)
 
 ![image](./citySelectorGif.gif)
