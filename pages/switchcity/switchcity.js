@@ -141,14 +141,14 @@ Page({
     console.log(code);
     const that = this;
     wx.request({
-      url: `http://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${config.key}`,
+      url: `https://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${config.key}`,
       success: function(res) {
         console.log(res.data.result[0]);
         that.setData({
           countyList: res.data.result[0],
         })
         console.log(that.data.countyList);
-        console.log("请求区县成功"+`http://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${config.key}`);
+        console.log("请求区县成功"+`https://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${config.key}`);
         console.log(res)
       },
       fail: function() {
@@ -168,7 +168,7 @@ Page({
         let latitude = res.latitude
         let longitude = res.longitude
         wx.request({
-            url: `http://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${config.key}`,
+            url: `https://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${config.key}`,
             success: res => {
               console.log(res)
               console.log(res.data.result.ad_info.city+res.data.result.ad_info.adcode);
