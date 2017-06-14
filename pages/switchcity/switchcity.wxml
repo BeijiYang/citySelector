@@ -28,8 +28,8 @@
 </ul>
 
 
- <view class="hotcity-common">选择区县：{{county}}</view>
- <view class="weui-grids">
+ <view wx:if="{{condition}}" class="hotcity-common">选择区县</view>
+ <view wx:if="{{condition}}" class="weui-grids">
    <block class="hotCity" wx:for-items="{{countyList}}" wx:key="{{index}}">
      <view class="weui-grid" data-code="{{item.id}}" data-city="{{item.fullname}}" bindtap="bindCounty" >
        <view class="weui-grid__label">{{item.fullname}}</view>
@@ -38,8 +38,8 @@
  </view>
 
 <view class="selectCity">
-  <view class="hotcity-common" bindtap="getLocation">重新定位城市</view>
-  <view class="thisCityName">{{city}}</view>
+  <view class="hotcity-common" bindtap="reGetLocation">重新定位城市</view>
+  <view class="thisCityName" data-city="{{city}}" data-code="{{currentCityCode}}">{{city}}</view>
 
 
   <!-- <view class="hotcity-common">最常访问</view>

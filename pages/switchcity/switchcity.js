@@ -1,7 +1,7 @@
 const city = require('../../utils/city.js');
 const cityObjs = require('../../utils/city.js');
 const config = require('../../utils/config.js');
-const app = getApp();
+const appInstance = getApp();
 Page({
   data: {
     searchLetter: [],
@@ -11,7 +11,7 @@ Page({
     isShowLetter: false,
     scrollTop: 0,//置顶高度
     scrollTopId: '',//置顶id
-    city: "杭州市",
+    city: "定位中",
     currentCityCode: '',
     hotcityList: [{ cityCode: 110000, city: '北京市' }, { cityCode: 310000, city: '上海市' }, { cityCode: 440100, city: '广州市' }, { cityCode: 440300, city: '深圳市' }, { cityCode: 330100, city: '杭州市' }, { cityCode: 320100, city: '南京市' }, { cityCode: 420100, city: '武汉市' },  { cityCode: 120000, city: '天津市' }, { cityCode: 610100, city: '西安市' }, ],
     commonCityList: [{ cityCode: 110000, city: '北京市' }, { cityCode: 310000, city: '上海市' }],
@@ -19,6 +19,7 @@ Page({
     inputName: '',
     completeList: [],
     county: '',
+    condition: false,
   },
   onLoad: function () {
     // 生命周期函数--监听页面加载
@@ -104,25 +105,42 @@ Page({
       })
     }, 500)
   },
-
+  reGetLocation: function() {
+    appInstance.globalData.defaultCity = this.data.city
+    appInstance.globalData.defaultCounty = this.data.county
+    console.log(appInstance.globalData.defaultCity);
+    //返回首页
+    wx.switchTab({
+      url: '../index/index'
+    })
+  },
   //选择城市
   bindCity: function (e) {
     // console.log("bindCity");
     // console.log(e);
     this.setData({
-      county: '',
+      condition:true,
       city: e.currentTarget.dataset.city,
       currentCityCode: e.currentTarget.dataset.code,
       scrollTop: 0,
       completeList: [],
     })
     this.selectCounty()
+
+    appInstance.globalData.defaultCity = this.data.city
+    appInstance.globalData.defaultCounty = ''
+    console.log(appInstance.globalData.defaultCity)
   },
 
   bindCounty: function(e) {
-    console.log("bindCounty");
     console.log(e);
     this.setData({ county: e.currentTarget.dataset.city })
+    appInstance.globalData.defaultCounty = this.data.county
+    console.log(appInstance.globalData.defaultCounty);
+
+    wx.switchTab({
+      url: '../index/index'
+    })
   },
 
   //点击热门城市回到顶部

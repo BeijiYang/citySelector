@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/switchcity/switchcity"
   ],
   "window": {
@@ -7,5 +8,18 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "selectedColor": "#ff4081",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "至少两个Tab"
+      }
+    ]
   }
 }
