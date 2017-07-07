@@ -207,7 +207,7 @@ Page({
     })
   },
   bindKeyInput: function(e) {
-    console.log(e.detail.value);
+    console.log("input: " + e.detail.value);
     this.setData({
       inputName: e.detail.value
     })
@@ -233,6 +233,14 @@ Page({
                     return (textShorter && textShorter == sd)
                   }
                 )
+
+    let tempChinese = cityList.filter(
+      itemShorter => {
+        let textShorter = itemShorter.city.slice(0,num)
+        return (textShorter && textShorter == sd)
+      }
+    )
+
 
    if(temp[0]) {
      temp.map(
@@ -260,6 +268,18 @@ Page({
        completeList: finalCityList,
      })
      console.log(this.data.completeList);
+   }else if(tempChinese[0]) {
+     console.log(tempChinese)
+     tempChinese.map(
+       item => {
+         let testObj = {};
+         testObj.city = item.city
+         testObj.code = item.code
+         finalCityList.push(testObj)
+       })
+       this.setData({
+         completeList: finalCityList,
+       })
    }else {
      return
    }
