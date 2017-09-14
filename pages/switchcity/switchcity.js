@@ -213,77 +213,75 @@ Page({
     })
     this.auto()
   },
-  auto: function() {
-    let inputSd = this.data.inputName
-    let sd = inputSd.toLowerCase();
+  auto: function () {
+    let inputSd = this.data.inputName.trim()
+    let sd = inputSd.toLowerCase()
     let num = sd.length
-    const cityList = cityObjs.cityObjs;
+    const cityList = cityObjs.cityObjs
+    console.log(cityList.length)
     let finalCityList = []
 
     let temp = cityList.filter(
-                  item => {
-                    let text = item.short.slice(0,num)
-                    return (text && text == sd)
-                  }
-                );
-
+      item => {
+        let text = item.short.slice(0, num).toLowerCase()
+        return (text && text == sd)
+      }
+    )
+    //在城市数据中，添加简拼到“shorter”属性，就可以实现简拼搜索
     let tempShorter = cityList.filter(
-                  itemShorter => {
-                    let textShorter = itemShorter.shorter.slice(0,num)
-                    return (textShorter && textShorter == sd)
-                  }
-                )
-
-    let tempChinese = cityList.filter(
       itemShorter => {
-        let textShorter = itemShorter.city.slice(0,num)
+        if (itemShorter.shorter) {
+          let textShorter = itemShorter.shorter.slice(0, num).toLowerCase()
         return (textShorter && textShorter == sd)
+        }
+        return
       }
     )
 
+    let tempChinese = cityList.filter(
+      itemChinese => {
+        let textChinese = itemChinese.city.slice(0, num)
+        return (textChinese && textChinese == sd)
+      }
+    )
 
-   if(temp[0]) {
-     temp.map(
-       item => {
-         let testObj = {};
-         testObj.city = item.city
-         testObj.code = item.code
-         finalCityList.push(testObj)
-       }
-     )
-     this.setData({
-       completeList: finalCityList,
-     })
-     console.log(this.data.completeList);
-   }else if(tempShorter[0]) {
-     tempShorter.map(
-       item => {
-         let testObj = {};
-         testObj.city = item.city
-         testObj.code = item.code
-         finalCityList.push(testObj)
-       }
-     );
-     this.setData({
-       completeList: finalCityList,
-     })
-     console.log(this.data.completeList);
-   }else if(tempChinese[0]) {
-     console.log(tempChinese)
-     tempChinese.map(
-       item => {
-         let testObj = {};
-         testObj.city = item.city
-         testObj.code = item.code
-         finalCityList.push(testObj)
-       })
-       this.setData({
-         completeList: finalCityList,
-       })
-   }else {
-     return
-   }
-
- },
-
+    if (temp[0]) {
+      temp.map(
+        item => {
+          let testObj = {};
+          testObj.city = item.city
+          testObj.code = item.code
+          finalCityList.push(testObj)
+        }
+      )
+      this.setData({
+        completeList: finalCityList,
+      })
+    } else if (tempShorter[0]) {
+      tempShorter.map(
+        item => {
+          let testObj = {};
+          testObj.city = item.city
+          testObj.code = item.code
+          finalCityList.push(testObj)
+        }
+      );
+      this.setData({
+        completeList: finalCityList,
+      })
+    } else if (tempChinese[0]) {
+      tempChinese.map(
+        item => {
+          let testObj = {};
+          testObj.city = item.city
+          testObj.code = item.code
+          finalCityList.push(testObj)
+        })
+      this.setData({
+        completeList: finalCityList,
+      })
+    } else {
+      return
+    }
+  },
 })
