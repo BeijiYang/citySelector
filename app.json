@@ -13,6 +13,7 @@
     "position": "top",
     "backgroundColor": "#689F38",
     "color": "#DCEDC8",
+    "selectedColor": "#DCEDC8",
     "list": [
       {
         "pagePath": "pages/index/index",

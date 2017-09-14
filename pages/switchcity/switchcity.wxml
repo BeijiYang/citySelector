@@ -8,7 +8,7 @@
       <view style="margin-top:0;">当前</view>
       <view style="margin-top:0;">热门</view>
     </view>
-    <view wx:for="{{searchLetter}}" style="color:#2ab4ff;font-size:20rpx;" wx:key="*this" data-letter="{{item.name}}" catchtouchend="clickLetter">{{item.name}}</view>
+    <view wx:for="{{searchLetter}}" style="color:#8BC34A;font-size:20rpx;" wx:key="*this" data-letter="{{item.name}}" catchtouchend="clickLetter">{{item.name}}</view>
   </view>
   <view class="container">
 

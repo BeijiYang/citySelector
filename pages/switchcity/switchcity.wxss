@@ -103,28 +103,28 @@ input {
 
 .thisCityName {
   display: inline-block;
-  border: 1rpx solid #2ab4ff;
+  border: 1rpx solid #8BC34A;
   border-radius: 8rpx;
   padding: 10rpx 0;
   font-size: 24rpx;
-  color: #2ab4ff;
+  color: #8BC34A;
   text-align: center;
   min-width: 149.5rpx;
   margin: 16rpx 0;
 }
 
 .thishotText {
-  color: #2ab4ff;
+  color: #8BC34A;
   font-size: 20rpx;
   margin: 0 !important;
 }
 
 .slectCity {
-  border-color: #2ab4ff !important;
+  border-color: #8BC34A !important;
 }
 
 .slectCity view {
-  color: #2ab4ff !important;
+  color: #8BC34A !important;
 }
 
 .weui-grid {
