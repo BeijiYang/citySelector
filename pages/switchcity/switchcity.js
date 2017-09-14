@@ -156,19 +156,19 @@ Page({
   selectCounty: function() {
     console.log("正在定位区县");
     let code = this.data.currentCityCode
-    console.log(code);
+    // console.log(code);
     const that = this;
     wx.request({
       url: `https://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${config.key}`,
       success: function(res) {
-        console.log(res.data)
-        console.log(res.data.result[0]);
+        // console.log(res.data)
+        // console.log(res.data.result[0]);
         that.setData({
           countyList: res.data.result[0],
         })
-        console.log(that.data.countyList);
+        // console.log(that.data.countyList);
         console.log("请求区县成功"+`https://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${config.key}`);
-        console.log(res)
+        // console.log(res)
       },
       fail: function() {
         console.log("请求区县失败，请重试");
@@ -189,8 +189,8 @@ Page({
         wx.request({
             url: `https://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${config.key}`,
             success: res => {
-              console.log(res)
-              console.log(res.data.result.ad_info.city+res.data.result.ad_info.adcode);
+              // console.log(res)
+              // console.log(res.data.result.ad_info.city+res.data.result.ad_info.adcode);
               that.setData({
                 city: res.data.result.ad_info.city,
                 currentCityCode: res.data.result.ad_info.adcode,
@@ -208,7 +208,7 @@ Page({
     })
   },
   bindKeyInput: function(e) {
-    console.log("input: " + e.detail.value);
+    // console.log("input: " + e.detail.value);
     this.setData({
       inputName: e.detail.value
     })
@@ -219,7 +219,7 @@ Page({
     let sd = inputSd.toLowerCase()
     let num = sd.length
     const cityList = cityObjs.cityObjs
-    console.log(cityList.length)
+    // console.log(cityList.length)
     let finalCityList = []
 
     let temp = cityList.filter(
