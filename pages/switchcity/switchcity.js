@@ -161,6 +161,7 @@ Page({
     wx.request({
       url: `https://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${config.key}`,
       success: function(res) {
+        console.log(res.data)
         console.log(res.data.result[0]);
         that.setData({
           countyList: res.data.result[0],
