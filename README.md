@@ -15,9 +15,10 @@
 * 将utils目录中，`config.default.js`文件改名为`config.js`
 * 并将其中的`key`改为自己的腾讯地图key（申请快速且免费）
 * ES6
-* 可 **直接作为模块使用**，如果对您有帮助，请star
 * 将模块集成到项目时，涉及到不同页面间数据通信的问题,见[小程序页面间通信](http://blog.csdn.net/beijiyang999/article/details/73109815)
-* 关于拼音搜索框的实现，见[小程序实现拼音搜索框](http://blog.csdn.net/beijiyang999/article/details/73135682)
+* 关于搜索框的实现，见[小程序实现城市名称拼音搜索框 汉字/拼音](http://blog.csdn.net/beijiyang999/article/details/73135682)
+* 关于搜索框的改进，见[这一篇](http://blog.csdn.net/beijiyang999/article/details/77985416)
+* 可 **直接作为模块使用，如果对您有帮助，请star**
 
 ### 更新
 * 实现了首页与城市选择页面之间的数据通信效果
