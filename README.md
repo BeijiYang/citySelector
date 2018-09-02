@@ -26,3 +26,8 @@
 * 针对定位模块在IOS中，侧面字母条的显示问题，进行了样式优化
 * 优化了demo样式
 * 升级了搜索功能，支持搜索335个城市(及相应级别地区)。截至目前，最新的[国家统计局2016年统计年鉴](http://www.stats.gov.cn/tjsj/ndsj/2016/indexch.htm)中,地级市291个，地级行政区划334个。
+
+### mpvue 版本
+[Leon originalix](https://github.com/originalix) 同学基于此项目写了 mpvue 版本（[项目地址](https://github.com/originalix/citySelector)）。
+
+使用 mpvue 的同学们可以参考。
