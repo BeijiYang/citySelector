@@ -11,9 +11,11 @@
 * Support Chinese character search & pinyin search
 * Support associative search
 
-### 动图演示 GIF Demonstration
-#### 在真机预览的画面是非常流畅的 
-#### lagging because of the screen recorder, running smoothly on mobile
+### 动图演示 / GIF Demonstration
+**在真机预览的画面是非常流畅的**
+
+**lagging because of the screen recorder, running smoothly on mobile**
+
 ![image](./citySelectorDemo.gif)
 
 ### 说明
