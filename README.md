@@ -1,13 +1,19 @@
-# 微信小程序 城市/区县定位选择器
+## 微信小程序 城市/区县定位选择器   WeChat mini program city/county selector
 
 ### 主要功能
 * **自动定位** 城市、区县（也支持手动重新定位）
 * 手动 **汉字、拼音搜索** 城市，支持搜索数量335个，覆盖地级市
 * 亦可通过 **侧边栏** 选择，城市按拼音首字母排列
 * 选择好城市后，自动显示 **辖下区县**
+### Features
+* Automatic positioning, or you can pick a city manually by the sidebar, the counties under the jurisdiction of it will be displayed
+* Search 335 cities across China, all prefecture-level cities included
+* Support Chinese character search & pinyin search
+* Support associative search
 
-### 动图演示
-#### 在真机预览的画面是非常流畅的
+### 动图演示 GIF Demonstration
+#### 在真机预览的画面是非常流畅的 
+#### lagging because of the screen recorder, running smoothly on mobile
 ![image](./citySelectorDemo.gif)
 
 ### 说明
@@ -31,3 +37,5 @@
 [Leon originalix](https://github.com/originalix) 同学基于此项目写了 mpvue 版本（[项目地址](https://github.com/originalix/citySelector)）。
 
 使用 mpvue 的同学们可以参考。
+### mpvue version
+Here is the [mpvue version](https://github.com/originalix/citySelector) based on this project by [Leon originalix](https://github.com/originalix).
