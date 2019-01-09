@@ -1,7 +1,10 @@
 const city = require('../../utils/city.js');
 const cityObjs = require('../../utils/city.js');
 const config = require('../../utils/config.js');
+const utils = require('../../utils/utils.js');
+const { isNotEmpty, isChinese } = utils;
 const appInstance = getApp();
+
 Page({
   data: {
     searchLetter: [],
@@ -13,7 +16,7 @@ Page({
     scrollTopId: '',//置顶id
     city: "定位中",
     currentCityCode: '',
-    hotcityList: [{ cityCode: 110000, city: '北京市' }, { cityCode: 310000, city: '上海市' }, { cityCode: 440100, city: '广州市' }, { cityCode: 440300, city: '深圳市' }, { cityCode: 330100, city: '杭州市' }, { cityCode: 320100, city: '南京市' }, { cityCode: 420100, city: '武汉市' },  { cityCode: 120000, city: '天津市' }, { cityCode: 610100, city: '西安市' }, ],
+    hotcityList: [{ cityCode: 110000, city: '北京市' }, { cityCode: 310000, city: '上海市' }, { cityCode: 440100, city: '广州市' }, { cityCode: 440300, city: '深圳市' }, { cityCode: 330100, city: '杭州市' }, { cityCode: 320100, city: '南京市' }, { cityCode: 420100, city: '武汉市' }, { cityCode: 120000, city: '天津市' }, { cityCode: 610100, city: '西安市' },],
     commonCityList: [{ cityCode: 110000, city: '北京市' }, { cityCode: 310000, city: '上海市' }],
     countyList: [{ cityCode: 110000, county: 'A区' }, { cityCode: 310000, county: 'B区' }, { cityCode: 440100, county: 'C区' }, { cityCode: 440300, county: 'D区' }, { cityCode: 330100, county: 'E县' }, { cityCode: 320100, county: 'F县' }, { cityCode: 420100, county: 'G县' }],
     inputName: '',
@@ -32,7 +35,7 @@ Page({
     let tempArr = [];
 
     searchLetter.map(
-      (item,index) => {
+      (item, index) => {
         // console.log(item);
         // console.log(index);
         let temp = {};
@@ -105,7 +108,7 @@ Page({
       })
     }, 500)
   },
-  reGetLocation: function() {
+  reGetLocation: function () {
     appInstance.globalData.defaultCity = this.data.city
     appInstance.globalData.defaultCounty = this.data.county
     console.log(appInstance.globalData.defaultCity);
@@ -119,7 +122,7 @@ Page({
     // console.log("bindCity");
     // console.log(e);
     this.setData({
-      condition:true,
+      condition: true,
       city: e.currentTarget.dataset.city,
       currentCityCode: e.currentTarget.dataset.code,
       scrollTop: 0,
@@ -132,7 +135,7 @@ Page({
     console.log(appInstance.globalData.defaultCity)
   },
 
-  bindCounty: function(e) {
+  bindCounty: function (e) {
     console.log(e);
     this.setData({ county: e.currentTarget.dataset.city })
     appInstance.globalData.defaultCounty = this.data.county
@@ -151,138 +154,106 @@ Page({
     })
   },
   bindScroll: function (e) {
-  //  console.log(e.detail)
+    //  console.log(e.detail)
   },
-  selectCounty: function() {
+  selectCounty: function () {
     console.log("正在定位区县");
     let code = this.data.currentCityCode
-    // console.log(code);
-    const that = this;
+
     wx.request({
       url: `https://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${config.key}`,
-      success: function(res) {
-        // console.log(res.data)
-        // console.log(res.data.result[0]);
-        that.setData({
+      success: res => {
+        this.setData({
           countyList: res.data.result[0],
         })
-        // console.log(that.data.countyList);
-        console.log("请求区县成功"+`https://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${config.key}`);
-        // console.log(res)
+        console.log("请求区县成功" + `https://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${config.key}`);
       },
-      fail: function() {
-        console.log("请求区县失败，请重试");
-      }
+      fail: () => { console.log("请求区县失败，请重试") }
     })
   },
-  getLocation: function() {
+  getLocation: function () {
     console.log("正在定位城市");
     this.setData({
       county: ''
     })
-    const that = this;
+    // const that = this;
     wx.getLocation({
       type: 'wgs84',
-      success: function(res) {
+      success: res => {
         let latitude = res.latitude
         let longitude = res.longitude
         wx.request({
-            url: `https://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${config.key}`,
-            success: res => {
-              // console.log(res)
-              // console.log(res.data.result.ad_info.city+res.data.result.ad_info.adcode);
-              that.setData({
-                city: res.data.result.ad_info.city,
-                currentCityCode: res.data.result.ad_info.adcode,
-                county: res.data.result.ad_info.district
-              })
-              that.selectCounty();
-            }
+          url: `https://apis.map.qq.com/ws/geocoder/v1/?location=${latitude},${longitude}&key=${config.key}`,
+          success: res => {
+            this.setData({
+              city: res.data.result.ad_info.city,
+              currentCityCode: res.data.result.ad_info.adcode,
+              county: res.data.result.ad_info.district
+            })
+            this.selectCounty();
+          }
         })
       }
     })
   },
-  bindBlur: function(e) {
+  // 失焦时清空输入框
+  bindBlur: function (e) {
     this.setData({
       inputName: ''
     })
   },
-  bindKeyInput: function(e) {
+  // 输入框输入时
+  bindKeyInput: function (e) {
     // console.log("input: " + e.detail.value);
     this.setData({
       inputName: e.detail.value
     })
-    this.auto()
+    this.associativeSearch()
   },
-  auto: function () {
-    let inputSd = this.data.inputName.trim()
-    let sd = inputSd.toLowerCase()
-    let num = sd.length
-    const cityList = cityObjs.cityObjs
-    // console.log(cityList.length)
-    let finalCityList = []
-
-    let temp = cityList.filter(
-      item => {
-        let text = item.short.slice(0, num).toLowerCase()
-        return (text && text == sd)
+  // 输入框自动联想搜索
+  associativeSearch: function () {
+    let inputContent = this.data.inputName.trim()
+    let content = inputContent.toLowerCase()
+    if (!content) {
+      this.setData({ completeList: [] })
+      return
+    }
+    // search
+    let resultList = this.searchList(content)
+    // show
+    this.showList(resultList)
+  },
+  searchList: function (str) {
+    const cityList = cityObjs.cityObjs //todo: 导入导出优化
+    let targetCity
+    return cityList.filter(
+      city => {
+        targetCity = this.getTargetCity(str, city)
+        return (targetCity && targetCity == str)
       }
     )
-    //在城市数据中，添加简拼到“shorter”属性，就可以实现简拼搜索
-    let tempShorter = cityList.filter(
-      itemShorter => {
-        if (itemShorter.shorter) {
-          let textShorter = itemShorter.shorter.slice(0, num).toLowerCase()
-        return (textShorter && textShorter == sd)
-        }
-        return
-      }
-    )
-
-    let tempChinese = cityList.filter(
-      itemChinese => {
-        let textChinese = itemChinese.city.slice(0, num)
-        return (textChinese && textChinese == sd)
-      }
-    )
-
-    if (temp[0]) {
-      temp.map(
-        item => {
-          let testObj = {};
-          testObj.city = item.city
-          testObj.code = item.code
-          finalCityList.push(testObj)
-        }
-      )
-      this.setData({
-        completeList: finalCityList,
-      })
-    } else if (tempShorter[0]) {
-      tempShorter.map(
-        item => {
-          let testObj = {};
-          testObj.city = item.city
-          testObj.code = item.code
-          finalCityList.push(testObj)
-        }
-      );
-      this.setData({
-        completeList: finalCityList,
-      })
-    } else if (tempChinese[0]) {
-      tempChinese.map(
-        item => {
-          let testObj = {};
-          testObj.city = item.city
-          testObj.code = item.code
-          finalCityList.push(testObj)
-        })
+  },
+  getTargetCity: function (str, cityObj) {
+    if (isChinese(str)) {
+      const slicedChineseName = cityObj.city.slice(0, str.length)
+      return slicedChineseName
+    } else {
+      const slicedPinyinName = cityObj.short.slice(0, str.length).toLowerCase()
+      return slicedPinyinName
+    }
+    // 在城市数据中，添加简拼到“shorter”属性，就可以实现简拼搜索
+    // cityObj.shorter.slice(0, len).toLowerCase()
+  },
+  showList: function (array) {
+    if (isNotEmpty(array)) {
+      let finalCityList = array.map(item => ({ city: item.city, code: item.code }))
       this.setData({
         completeList: finalCityList,
       })
     } else {
-      return
+      this.setData({
+        completeList: [{ city: '无匹配城市', code: "000" }]
+      })
     }
   },
 })

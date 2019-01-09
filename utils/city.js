@@ -7,7 +7,7 @@ import {
 // 对城市信息进行分组
 const cityList = () => (
   searchLetter.map(
-    initial => ({
+    initial => ({ //initialLetter
       initial,
       cityInfo: cityObj.filter(city => city.initial == initial)
     })
