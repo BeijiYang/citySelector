@@ -1,7 +1,15 @@
-import { LETTERS, CITY_LIST } from '../../locale/citydata'
+import { LETTERS, CITY_LIST, HOT_CITY_LIST } from '../../locale/citydata'
 import utils from '../../utils/utils'
 
-const { isNotEmpty, isChinese, safeGet, getCityListSortedByInitialLetter, getLocationUrl, getCountyListUrl, getIndexUrl } = utils;
+const {
+  isNotEmpty,
+  isChinese,
+  safeGet,
+  getCityListSortedByInitialLetter,
+  getLocationUrl,
+  getCountyListUrl,
+  getIndexUrl
+} = utils;
 const appInstance = getApp();
 
 Page({
@@ -9,6 +17,7 @@ Page({
     sideBarLetterList: [],
     winHeight: 0,
     cityList: [],
+    hotCityList: HOT_CITY_LIST,
     showChosenLetterToast: false,
     scrollTop: 0,//置顶高度
     scrollTopId: '',//置顶id

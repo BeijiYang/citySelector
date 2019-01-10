@@ -8,7 +8,6 @@
   display: flex;
   flex-direction: column;
   padding: 10rpx;
-
 }
 
 input {
@@ -17,7 +16,12 @@ input {
   padding: 5px;
 }
 
-.sideBarLetterList {
+scroll-view {
+  padding-left:16rpx;
+}
+
+
+.side-bar-letter-list {
   flex-shrink: 0;
   width: 80rpx;
   text-align: center;
@@ -26,18 +30,18 @@ input {
   color: #666;
 }
 
-.sideBarLetterList view {
+.side-bar-letter-list view {
   margin-top: 20rpx;
 }
 
-.touchClass {
+.touch-class {
   background-color: #fff;
   color: #fff;
   padding-top: 16rpx;
   padding-bottom: 16rpx;
 }
 
-.showChosenLetter {
+.show-chosen-letter {
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   display: flex;
@@ -61,13 +65,30 @@ input {
   margin-top: 10rpx;
 }
 
-.selectCity {
+.city-picker {
   padding: 16rpx;
   background-color: #f5f5f5;
   margin-bottom: -10rpx;
 }
+.county-picker {
+  padding-left: 20rpx;
+  margin-bottom: 10rpx;
+}
+.county-picker-title {
+  font-size: 24rpx;
+  color: #666;
+  padding-bottom: 0;
+  margin: 8rpx 0;
+  padding-left:4px;
+}
+.hot-city {
+  background-color: #f5f5f5;
+  margin-bottom: -10rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
 
-.item_letter {
+.item-letter {
   display: flex;
   background-color: #f5f5f5;
   height: 40rpx;
@@ -77,7 +98,7 @@ input {
   color: #666;
 }
 
-.item_city {
+.item-city {
   display: flex;
   background-color: #fff;
   height: 100rpx;
@@ -96,12 +117,12 @@ input {
   margin-left: 16rpx;
 }
 
-.hotCity {
+.county-picker-list {
   padding-right: 50rpx;
   margin: auto;
 }
 
-.thisCityName {
+.current-city {
   display: inline-block;
   border: 1rpx solid #8BC34A;
   border-radius: 8rpx;
@@ -110,10 +131,10 @@ input {
   color: #8BC34A;
   text-align: center;
   min-width: 149.5rpx;
-  margin: 16rpx 0;
+  margin: 16rpx;
 }
 
-.thishotText {
+.side-bar-hot-city {
   color: #8BC34A;
   font-size: 20rpx;
   margin: 0 !important;
@@ -134,7 +155,7 @@ input {
   border: 1rpx solid #ececec;
   border-radius: 8rpx;
   background-color: white;
-  margin: 8rpx 0;
+  margin: 8rpx 0 8rpx 8rpx;
 }
 
 .weui-grids {
@@ -143,7 +164,7 @@ input {
   justify-content: space-between;
 }
 
-.weui-grid__label {
+.weui-grid-label {
   display: block;
   text-align: center;
   color: #333;
@@ -178,4 +199,5 @@ input {
 .county {
   display: flex;
   flex-wrap: wrap;
+  
 }
