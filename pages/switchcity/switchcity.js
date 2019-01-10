@@ -31,17 +31,8 @@ Page({
   onLoad: function () {
     // 生命周期函数--监听页面加载
     const cityListSortedByInitialLetter = getCityListSortedByInitialLetter();
-    console.log(cityListSortedByInitialLetter)
     const sysInfo = wx.getSystemInfoSync();
     const winHeight = sysInfo.windowHeight;
-    // const itemH = winHeight / LETTERS.length;
-    // let tempArr = LETTERS.map(
-    //   (item, index) => ({
-    //     name: item,
-    //     tHeight: index * itemH,
-    //     bHeight: (index + 1) * itemH,
-    //   })
-    // );
     const sideBarLetterList = LETTERS.map(letter => ({ name: letter }));
     this.setData({
       winHeight,
