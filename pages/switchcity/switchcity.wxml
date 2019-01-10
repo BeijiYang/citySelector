@@ -3,17 +3,17 @@
 </view>
 
 <view class="container-inner">
-  <view class="searchLetter touchClass">
+  <view class="sideBarLetterList touchClass">
     <view class="thishotText" bindtap="hotCity">
       <view style="margin-top:0;">当前</view>
       <view style="margin-top:0;">热门</view>
     </view>
-    <view wx:for="{{searchLetter}}" style="color:#8BC34A;font-size:20rpx;" wx:key="*this" data-letter="{{item.name}}" catchtouchend="clickLetter">{{item.name}}</view>
+    <view wx:for="{{sideBarLetterList}}" style="color:#8BC34A;font-size:20rpx;" wx:key="*this" data-letter="{{item.name}}" catchtouchend="touchSideBarLetter">{{item.name}}</view>
   </view>
   <view class="container">
 
-    <block wx:if="{{isShowLetter}}">
-      <view class="showSlectedLetter">
+    <block wx:if="{{showChosenLetterToast}}">
+      <view class="showChosenLetter">
         {{toastShowLetter}}
       </view>
     </block>
@@ -23,14 +23,14 @@
 
 
       <ul class="ul">
-        <li wx:for="{{completeList}}" wx:key="*this" bindtap="bindCity" data-city="{{item.city}}" data-code="{{item.code}}" class="li">{{item.city}}</li>
+        <li wx:for="{{completeList}}" wx:key="*this" bindtap="chooseCity" data-city="{{item.city}}" data-code="{{item.code}}" class="li">{{item.city}}</li>
       </ul>
 
 
-      <view wx:if="{{condition}}" class="hotcity-common">选择区县</view>
-      <view wx:if="{{condition}}" class="county">
+      <view wx:if="{{showCountyPicker}}" class="hotcity-common">选择区县</view>
+      <view wx:if="{{showCountyPicker}}" class="county">
         <block class="hotCity" wx:for-items="{{countyList}}" wx:key="id">
-          <view class="weui-grid" style="margin-right: 16rpx;" data-code="{{item.id}}" data-city="{{item.fullname}}" bindtap="bindCounty">
+          <view class="weui-grid" style="margin-right: 16rpx;" data-code="{{item.id}}" data-city="{{item.fullname}}" bindtap="chooseCounty">
             <view class="weui-grid__label">{{item.fullname}}</view>
           </view>
         </block>
@@ -42,35 +42,35 @@
 
         <view class="hotcity-common">热门城市</view>
         <view class="weui-grids">
-          <view class="weui-grid" data-code="110000" data-city="北京市" bindtap="bindCity">
+          <view class="weui-grid" data-code="110000" data-city="北京市" bindtap="chooseCity">
             <view class="weui-grid__label">北京市</view>
           </view>
-          <view class="weui-grid" data-code="310000" data-city="上海市" bindtap="bindCity">
+          <view class="weui-grid" data-code="310000" data-city="上海市" bindtap="chooseCity">
             <view class="weui-grid__label">上海市</view>
           </view>
-          <view class="weui-grid" data-code="440100" data-city="广州市" bindtap="bindCity">
+          <view class="weui-grid" data-code="440100" data-city="广州市" bindtap="chooseCity">
             <view class="weui-grid__label">广州市</view>
           </view>
         </view>
         <view class="weui-grids">
-          <view class="weui-grid" data-code="440300" data-city="深圳市" bindtap="bindCity">
+          <view class="weui-grid" data-code="440300" data-city="深圳市" bindtap="chooseCity">
             <view class="weui-grid__label">深圳市</view>
           </view>
-          <view class="weui-grid" data-code="330100" data-city="杭州市" bindtap="bindCity">
+          <view class="weui-grid" data-code="330100" data-city="杭州市" bindtap="chooseCity">
             <view class="weui-grid__label">杭州市</view>
           </view>
-          <view class="weui-grid" data-code="320100" data-city="南京市" bindtap="bindCity">
+          <view class="weui-grid" data-code="320100" data-city="南京市" bindtap="chooseCity">
             <view class="weui-grid__label">南京市</view>
           </view>
         </view>
         <view class="weui-grids">
-          <view class="weui-grid" data-code="420100" data-city="武汉市" bindtap="bindCity">
+          <view class="weui-grid" data-code="420100" data-city="武汉市" bindtap="chooseCity">
             <view class="weui-grid__label">武汉市</view>
           </view>
-          <view class="weui-grid" data-code="120000" data-city="天津市" bindtap="bindCity">
+          <view class="weui-grid" data-code="120000" data-city="天津市" bindtap="chooseCity">
             <view class="weui-grid__label">天津市</view>
           </view>
-          <view class="weui-grid" data-code="610100" data-city="西安市" bindtap="bindCity">
+          <view class="weui-grid" data-code="610100" data-city="西安市" bindtap="chooseCity">
             <view class="weui-grid__label">西安市</view>
           </view>
         </view>
@@ -79,7 +79,7 @@
 
       <view class="selection" wx:for="{{cityList}}" wx:key="initial">
         <view class="item_letter" id="{{item.initial}}">{{item.initial}}</view>
-        <view class="item_city" wx:for="{{item.cityInfo}}" wx:for-item="ct" wx:key="id" data-code="{{ct.code}}" data-city="{{ct.city}}" bindtap="bindCity">
+        <view class="item_city" wx:for="{{item.cityInfo}}" wx:for-item="ct" wx:key="id" data-code="{{ct.code}}" data-city="{{ct.city}}" bindtap="chooseCity">
           {{ct.city}}
         </view>
       </view>

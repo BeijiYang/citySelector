@@ -17,7 +17,7 @@ input {
   padding: 5px;
 }
 
-.searchLetter {
+.sideBarLetterList {
   flex-shrink: 0;
   width: 80rpx;
   text-align: center;
@@ -26,7 +26,7 @@ input {
   color: #666;
 }
 
-.searchLetter view {
+.sideBarLetterList view {
   margin-top: 20rpx;
 }
 
@@ -37,7 +37,7 @@ input {
   padding-bottom: 16rpx;
 }
 
-.showSlectedLetter {
+.showChosenLetter {
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   display: flex;
