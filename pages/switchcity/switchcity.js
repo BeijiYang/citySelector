@@ -1,9 +1,5 @@
-import {
-  LETTERS,
-  CITY_ARR_TWO as cityList
-} from '../../locale/citydata'
+import { LETTERS, CITY_LIST } from '../../locale/citydata'
 import utils from '../../utils/utils'
-import config from '../../utils/config'
 
 const { isNotEmpty, isChinese, safeGet, getCityListSortedByInitialLetter, getLocationUrl, getCountyListUrl, getIndexUrl } = utils;
 const appInstance = getApp();
@@ -26,6 +22,7 @@ Page({
   onLoad: function () {
     // 生命周期函数--监听页面加载
     const cityListSortedByInitialLetter = getCityListSortedByInitialLetter();
+    console.log(cityListSortedByInitialLetter)
     const sysInfo = wx.getSystemInfoSync();
     const winHeight = sysInfo.windowHeight;
     // const itemH = winHeight / LETTERS.length;
@@ -128,7 +125,7 @@ Page({
         console.log(countyList)
         this.setData({ countyList })
       },
-      fail: () => { console.log("请求区县失败，请重试") }
+      fail: () => { console.error("请求区县失败，请重试") }
     })
   },
   getLocation: function () {
@@ -153,7 +150,8 @@ Page({
             this.getCountyList();
           }
         })
-      }
+      },
+      fail: () => { console.error("定位失败，请重试") }
     })
   },
   reGetLocation: function () {
@@ -188,7 +186,7 @@ Page({
   },
   searchList: function (str) {
     let targetCity
-    return cityList.filter(
+    return CITY_LIST.filter(
       city => {
         targetCity = this.getTargetCity(str, city)
         return (targetCity && targetCity == str)
