@@ -161,7 +161,10 @@ Page({
   },
   // 失焦时清空输入框
   bindBlur: function (e) {
-    this.setData({ inputName: '' })// todo 当失去焦点 清空同时 也去掉“无匹配城市”
+    this.setData({
+      inputName: '',
+      completeList: []
+    })
   },
   // 输入框输入时
   bindKeyInput: function (e) {
