@@ -26,7 +26,7 @@ Page({
     inputName: '',
     completeList: [],
     county: '',
-    showCountyPicker: true,
+    showCountyPicker: false,
   },
   onLoad: function () {
     // 生命周期函数--监听页面加载
@@ -144,7 +144,7 @@ Page({
             })
             console.log(city)
             appInstance.globalData.defaultCity = city
-            this.getCountyList();
+            // this.getCountyList();
           }
         })
       },
