@@ -1,7 +1,7 @@
 import { CITY_LIST, CITY_NOT_FOUND } from '../locale/citydata'
 import utils from 'utils'
 
-const { isNotEmpty, isChinese } = utils;
+const { isNotEmpty, isChinese, getSlicedName } = utils;
 
 // 接收输入框输入的值，返回最终匹配到的数组
 export class AutoPredictor {
@@ -30,14 +30,14 @@ export class AutoPredictor {
 
   getTargetCity(str, cityObj) {
     if (isChinese(str)) {
-      const slicedChineseName = cityObj.city && cityObj.city.slice(0, str.length) // todo: 相似逻辑 抽象之。数据与逻辑分离
+      const slicedChineseName = getSlicedName(cityObj, 'city', str.length)
       return slicedChineseName
     } else {
-      const slicedPinyinName = cityObj.short && cityObj.short.slice(0, str.length).toLowerCase()
+      const slicedPinyinName = getSlicedName(cityObj, 'short', str.length).toLowerCase()
       return slicedPinyinName
     }
     // 在城市数据中，添加简拼到“shorter”属性，就可以实现简拼搜索
-    // cityObj.shorter.slice(0, len).toLowerCase()
+    // getSlicedName(cityObj, 'shorter', str.length).toLowerCase()
   }
 
   showList(array) {

@@ -1,10 +1,9 @@
-import { LETTERS, CITY_LIST, HOT_CITY_LIST } from '../../locale/citydata'
+import { LETTERS, HOT_CITY_LIST } from '../../locale/citydata'
 import { AutoPredictor } from '../../utils/autoPredictor'
 import utils from '../../utils/utils'
 
 const {
   isNotEmpty,
-  isChinese,
   safeGet,
   getCityListSortedByInitialLetter,
   getLocationUrl,

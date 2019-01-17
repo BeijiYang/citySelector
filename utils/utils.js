@@ -23,6 +23,8 @@ const getCityListSortedByInitialLetter = () => (
   )
 )
 
+const getSlicedName = (cityObj, key, sliceLen) => (cityObj[key] && cityObj[key].slice(0, sliceLen))
+
 export default {
   getLocationUrl,
   getCountyListUrl,
@@ -31,4 +33,5 @@ export default {
   isNotEmpty,
   isChinese,
   getCityListSortedByInitialLetter,
+  getSlicedName,
 }
