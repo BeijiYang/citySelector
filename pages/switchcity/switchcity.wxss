@@ -126,7 +126,7 @@ scroll-view {
   display: inline-block;
   border: 1rpx solid #8BC34A;
   border-radius: 8rpx;
-  padding: 10rpx 0;
+  padding: 10rpx;
   font-size: 24rpx;
   color: #8BC34A;
   text-align: center;

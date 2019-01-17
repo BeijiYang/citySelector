@@ -86,6 +86,7 @@ Page({
       currentCityCode: code,
       scrollTop: 0,
       completeList: [],
+      county: ''
     })
     this.getCountyList()
 
