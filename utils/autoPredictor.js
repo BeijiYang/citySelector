@@ -3,7 +3,11 @@ import utils from 'utils'
 
 const { isNotEmpty, isChinese, getSlicedName } = utils;
 
-// 接收输入框输入的值，返回最终匹配到的数组
+/*
+* AutoPredictor 实例一定有两个对外的接口：
+* 1. 接收 输入框输入的值
+* 2. 返回 最终匹配到的数组
+*/
 export class AutoPredictor {
   constructor(inputContent) {
     this.content = inputContent.toLowerCase()
