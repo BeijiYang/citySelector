@@ -5,4 +5,6 @@ const CITY_LIST = [{ "id": "35", "provincecode": "150000", "city": "阿拉善盟
 
 const HOT_CITY_LIST = [{ cityCode: 110000, city: '北京市' }, { cityCode: 310000, city: '上海市' }, { cityCode: 440100, city: '广州市' }, { cityCode: 440300, city: '深圳市' }, { cityCode: 330100, city: '杭州市' }, { cityCode: 320100, city: '南京市' }, { cityCode: 420100, city: '武汉市' }, { cityCode: 120000, city: '天津市' }, { cityCode: 610100, city: '西安市' },]
 
-export { LETTERS, CITY_LIST, HOT_CITY_LIST };
+const CITY_NOT_FOUND = [{ city: '无匹配城市', code: "000" }]
+
+export { LETTERS, CITY_LIST, HOT_CITY_LIST, CITY_NOT_FOUND };

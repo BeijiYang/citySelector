@@ -1,4 +1,5 @@
 import { LETTERS, CITY_LIST, HOT_CITY_LIST } from '../../locale/citydata'
+import { AutoPredictor } from '../../utils/autoPredictor'
 import utils from '../../utils/utils'
 
 const {
@@ -36,7 +37,6 @@ Page({
     const sideBarLetterList = LETTERS.map(letter => ({ name: letter }));
     this.setData({
       winHeight,
-      // itemH: itemH,
       sideBarLetterList,
       cityList: cityListSortedByInitialLetter
     });
@@ -70,7 +70,6 @@ Page({
 
   touchSideBarLetter: function (e) {
     const chosenLetter = safeGet(['currentTarget', 'dataset', 'letter'], e)
-    // const chosenLetter = e.currentTarget.dataset.letter;
     this.setData({
       toastShowLetter: chosenLetter,
       showChosenLetterToast: true,
@@ -82,7 +81,6 @@ Page({
   //选择城市
   chooseCity: function (e) {
     const { city, code } = safeGet(['currentTarget', 'dataset'], e)
-    // const { city, code } = e.currentTarget.dataset
     this.setData({
       showCountyPicker: true,
       city,
@@ -99,7 +97,6 @@ Page({
 
   chooseCounty: function (e) {
     const county = safeGet(['currentTarget', 'dataset', 'city'], e)
-    console.log(county)
     this.setData({ county })
     appInstance.globalData.defaultCounty = county
     // 返回首页
@@ -164,52 +161,21 @@ Page({
   },
   // 失焦时清空输入框
   bindBlur: function (e) {
-    this.setData({ inputName: '' })
+    this.setData({ inputName: '' })// todo 当失去焦点 清空同时 也去掉“无匹配城市”
   },
   // 输入框输入时
   bindKeyInput: function (e) {
-    this.setData({ inputName: e.detail.value })
-    this.associativeSearch()
+    let inputName = e.detail.value.trim()
+    this.setData({ inputName })
+    if (!inputName) {
+      this.setData({ completeList: [] })
+    }
+    this.useAutoPredictor(inputName)
   },
   // 输入框自动联想搜索
-  associativeSearch: function () {
-    let inputContent = this.data.inputName.trim()
-    let content = inputContent.toLowerCase()
-    if (!content) {
-      this.setData({ completeList: [] })
-      return
-    }
-    // search
-    let resultList = this.searchList(content)
-    // show
-    this.showList(resultList)
-  },
-  searchList: function (str) {
-    let targetCity
-    return CITY_LIST.filter(
-      city => {
-        targetCity = this.getTargetCity(str, city)
-        return (targetCity && targetCity == str)
-      }
-    )
-  },
-  getTargetCity: function (str, cityObj) {
-    if (isChinese(str)) {
-      const slicedChineseName = cityObj.city && cityObj.city.slice(0, str.length)
-      return slicedChineseName
-    } else {
-      const slicedPinyinName = cityObj.short && cityObj.short.slice(0, str.length).toLowerCase()
-      return slicedPinyinName
-    }
-    // 在城市数据中，添加简拼到“shorter”属性，就可以实现简拼搜索
-    // cityObj.shorter.slice(0, len).toLowerCase()
-  },
-  showList: function (array) {
-    if (isNotEmpty(array)) {
-      let finalCityList = array.map(item => ({ city: item.city, code: item.code }))
-      this.setData({ completeList: finalCityList })
-    } else {
-      this.setData({ completeList: [{ city: '无匹配城市', code: "000" }] })
-    }
+  useAutoPredictor: function (content) {
+    let autoPredictor = new AutoPredictor(content)
+    let completeList = autoPredictor.associativeSearch()
+    this.setData({ completeList })
   },
 })
