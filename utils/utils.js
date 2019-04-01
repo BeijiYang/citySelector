@@ -6,7 +6,12 @@ const getLocationUrl = (latitude, longitude) => (`https://apis.map.qq.com/ws/geo
 const getCountyListUrl = code => (`https://apis.map.qq.com/ws/district/v1/getchildren?&id=${code}&key=${config.key}`)
 const getIndexUrl = () => ('../index/index')
 
-// 安全地在深层嵌套对象中取值
+/**
+ * 安全地在深层嵌套对象中取值
+ * get deeply nested data from an object safely, return null if not found
+ * @param {Array} keyList an Array of keys
+ * @param {Object} obj 
+ */
 const safeGet = (keyList, obj) => keyList.reduce((preValue, curKey) => ((preValue && preValue[curKey]) ? preValue[curKey] : null), obj)
 
 const isNotEmpty = array => (Array.isArray(array) && array.length > 0)
@@ -25,7 +30,7 @@ const getCityListSortedByInitialLetter = () => (
 
 const getSlicedName = (cityObj, key, sliceLen) => (cityObj[key] && cityObj[key].slice(0, sliceLen))
 
-const onFail = (err) => { console.log(err) } // add your logic here
+const onFail = (err) => { console.log(err) } // add your logic here e.g. show a toast
 
 export default {
   getLocationUrl,
