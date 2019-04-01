@@ -25,6 +25,8 @@ const getCityListSortedByInitialLetter = () => (
 
 const getSlicedName = (cityObj, key, sliceLen) => (cityObj[key] && cityObj[key].slice(0, sliceLen))
 
+const onFail = (err) => { console.log(err) } // add your logic here
+
 export default {
   getLocationUrl,
   getCountyListUrl,
@@ -34,4 +36,5 @@ export default {
   isChinese,
   getCityListSortedByInitialLetter,
   getSlicedName,
+  onFail,
 }
