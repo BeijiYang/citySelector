@@ -29,6 +29,7 @@ Page({
     completeList: [],
     county: '',
     showCountyPicker: false,
+    auto: true, // 自动手动定位开关
   },
   onLoad: function () {
     // 生命周期函数--监听页面加载
@@ -59,6 +60,7 @@ Page({
   chooseCity: function (e) {
     const { city, code } = safeGet(['currentTarget', 'dataset'], e)
     this.setData({
+      auto: false,
       showCountyPicker: true,
       city,
       currentCityCode: code,
@@ -70,7 +72,6 @@ Page({
 
     appInstance.globalData.defaultCity = city
     appInstance.globalData.defaultCounty = ''
-    console.log(appInstance.globalData.defaultCity)
   },
 
   chooseCounty: function (e) {
@@ -102,7 +103,6 @@ Page({
   setCountyList: function (res) {
     const resultArray = safeGet(['data', 'result'], res)
     const countyList = isNotEmpty(resultArray) ? resultArray[0] : []
-    console.log(countyList)
     this.setData({ countyList })
   },
 
@@ -127,14 +127,15 @@ Page({
 
   setCityCounty: function (location) {
     const { city, adcode, district } = safeGet(['data', 'result', 'ad_info'], location)
-    this.setData({
-      city,
-      currentCityCode: adcode,
-      county: district
-    })
-    console.log(city)
-    appInstance.globalData.defaultCity = city
-    // this.getCountyList();
+    if (this.data.auto) { // 如果开始手动选择，以手动为准
+      this.setData({
+        city,
+        currentCityCode: adcode,
+        county: district
+      })
+      appInstance.globalData.defaultCity = city
+      // this.getCountyList();
+    }
   },
   reGetLocation: function () {
     const { city, county } = this.data
