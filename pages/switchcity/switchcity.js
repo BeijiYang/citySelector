@@ -1,4 +1,5 @@
 import { LETTERS, HOT_CITY_LIST } from '../../locale/citydata'
+import { commonMessage } from '../../locale/commonMessageZhCn'
 import { AutoPredictor } from '../../utils/autoPredictor'
 import utils from '../../utils/utils'
 
@@ -22,7 +23,7 @@ Page({
     showChosenLetterToast: false,
     scrollTop: 0,//置顶高度
     scrollTopId: '',//置顶id
-    city: "定位中", //todo 换
+    city: commonMessage['location.getting'],
     currentCityCode: '',
     inputName: '',
     completeList: [],
@@ -88,13 +89,13 @@ Page({
     // console.log(e.detail)
   },
   getCountyList: function () {
-    console.log("正在获取区县");
+    console.log(commonMessage['location.county.getting']);
     const code = this.data.currentCityCode
 
     wx.request({
       url: getCountyListUrl(code),
       success: res => this.setCountyList(res),
-      fail: onFail("请求区县失败，请重试"),// TODO
+      fail: onFail(commonMessage['location.county.fail']),
     })
   },
 
@@ -106,12 +107,13 @@ Page({
   },
 
   getLocation: function () {
-    console.log("正在定位城市");
+    console.log(commonMessage['location.city.getting'])
+
     this.setData({ county: '' })
     wx.getLocation({
       type: 'wgs84',
       success: res => this.getLocationFromGeoCoord(res),
-      fail: onFail("定位失败，请重试"),// TODO
+      fail: onFail(commonMessage['location.city.fail']),
     })
   },
 
