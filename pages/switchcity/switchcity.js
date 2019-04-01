@@ -8,7 +8,8 @@ const {
   getCityListSortedByInitialLetter,
   getLocationUrl,
   getCountyListUrl,
-  getIndexUrl
+  getIndexUrl,
+  onFail,
 } = utils;
 const appInstance = getApp();
 
@@ -21,7 +22,7 @@ Page({
     showChosenLetterToast: false,
     scrollTop: 0,//置顶高度
     scrollTopId: '',//置顶id
-    city: "定位中",
+    city: "定位中", //todo 换
     currentCityCode: '',
     inputName: '',
     completeList: [],
@@ -41,30 +42,6 @@ Page({
     });
     // 定位
     this.getLocation();
-  },
-  onReady: function () {
-    // 生命周期函数--监听页面初次渲染完成
-
-  },
-  onShow: function () {
-    // 生命周期函数--监听页面显示
-
-  },
-  onHide: function () {
-    // 生命周期函数--监听页面隐藏
-
-  },
-  onUnload: function () {
-    // 生命周期函数--监听页面卸载
-
-  },
-  onPullDownRefresh: function () {
-    // 页面相关事件处理函数--监听用户下拉动作
-
-  },
-  onReachBottom: function () {
-    // 页面上拉触底事件的处理函数
-
   },
 
   touchSideBarLetter: function (e) {
@@ -90,7 +67,7 @@ Page({
     })
     this.getCountyList()
 
-    appInstance.globalData.defaultCity = this.data.city
+    appInstance.globalData.defaultCity = city
     appInstance.globalData.defaultCounty = ''
     console.log(appInstance.globalData.defaultCity)
   },
@@ -116,40 +93,46 @@ Page({
 
     wx.request({
       url: getCountyListUrl(code),
-      success: res => {
-        const resultArray = safeGet(['data', 'result'], res)
-        const countyList = isNotEmpty(resultArray) ? resultArray[0] : []
-        console.log(countyList)
-        this.setData({ countyList })
-      },
-      fail: () => { console.error("请求区县失败，请重试") }
+      success: res => this.setCountyList(res),
+      fail: onFail("请求区县失败，请重试"),// TODO
     })
   },
+
+  setCountyList: function (res) {
+    const resultArray = safeGet(['data', 'result'], res)
+    const countyList = isNotEmpty(resultArray) ? resultArray[0] : []
+    console.log(countyList)
+    this.setData({ countyList })
+  },
+
   getLocation: function () {
     console.log("正在定位城市");
     this.setData({ county: '' })
-
     wx.getLocation({
       type: 'wgs84',
-      success: res => {
-        const { latitude, longitude } = res
-        wx.request({
-          url: getLocationUrl(latitude, longitude),
-          success: res => {
-            const { city, adcode, district } = safeGet(['data', 'result', 'ad_info'], res)
-            this.setData({
-              city,
-              currentCityCode: adcode,
-              county: district
-            })
-            console.log(city)
-            appInstance.globalData.defaultCity = city
-            // this.getCountyList();
-          }
-        })
-      },
-      fail: () => { console.error("定位失败，请重试") }
+      success: res => this.getLocationFromGeoCoord(res),
+      fail: onFail("定位失败，请重试"),// TODO
     })
+  },
+
+  getLocationFromGeoCoord: function (geoCoord) {
+    const { latitude, longitude } = geoCoord
+    wx.request({
+      url: getLocationUrl(latitude, longitude),
+      success: location => this.setCityCounty(location)
+    })
+  },
+
+  setCityCounty: function (location) {
+    const { city, adcode, district } = safeGet(['data', 'result', 'ad_info'], location)
+    this.setData({
+      city,
+      currentCityCode: adcode,
+      county: district
+    })
+    console.log(city)
+    appInstance.globalData.defaultCity = city
+    // this.getCountyList();
   },
   reGetLocation: function () {
     const { city, county } = this.data
